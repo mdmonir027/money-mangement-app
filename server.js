@@ -1,16 +1,16 @@
 // dependencies
 const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
 const mongoose = require('mongoose');
+
+// custom dependencies
+const setMiddleware = require('./middleware/middleware');
+const setRoutes = require('./routes/routes');
 
 // scaffolding
 const app = express();
 
-app.use(morgan('dev'));
-app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+setMiddleware(app);
+setRoutes(app);
 
 app.get('/', (req, res) => {
   res.status(200).json({
