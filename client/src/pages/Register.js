@@ -24,6 +24,7 @@ export class Register extends Component {
   };
 
   render() {
+    const { name, email, password, confirmPassword } = this.state;
     return (
       <Grid container justify='center' style={{ marginTop: 20 }}>
         <Grid item md={5}>
@@ -42,6 +43,7 @@ export class Register extends Component {
                 error={false}
                 name='name'
                 onChange={this.changeHandler}
+                value={name}
               />
               <TextField
                 type='email'
@@ -56,6 +58,7 @@ export class Register extends Component {
                 error={false}
                 name='email'
                 onChange={this.changeHandler}
+                value={email}
               />
               <TextField
                 type='password'
@@ -70,6 +73,7 @@ export class Register extends Component {
                 error={false}
                 name='password'
                 onChange={this.changeHandler}
+                value={password}
               />
               <TextField
                 type='password'
@@ -84,6 +88,7 @@ export class Register extends Component {
                 error={false}
                 name='confirmPassword'
                 onChange={this.changeHandler}
+                value={confirmPassword}
               />
               <Button variant='contained' color='primary' type='submit'>
                 Register

@@ -24,6 +24,7 @@ export class Login extends Component {
   };
 
   render() {
+    const { email, password } = this.state;
     return (
       <Grid container justify='center' style={{ marginTop: 20 }}>
         <Grid item md={5}>
@@ -43,6 +44,7 @@ export class Login extends Component {
                 error={false}
                 name='email'
                 onChange={this.changeHandler}
+                value={email}
               />
               <TextField
                 type='password'
@@ -57,6 +59,7 @@ export class Login extends Component {
                 error={false}
                 name='password'
                 onChange={this.changeHandler}
+                value={password}
               />
 
               <Button variant='contained' color='primary' type='submit'>
