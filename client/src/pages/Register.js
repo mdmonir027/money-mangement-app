@@ -44,6 +44,7 @@ export class Register extends Component {
                 onChange={this.changeHandler}
               />
               <TextField
+                type='email'
                 label='Email'
                 placeholder='Email address'
                 helperText=''
@@ -57,6 +58,7 @@ export class Register extends Component {
                 onChange={this.changeHandler}
               />
               <TextField
+                type='password'
                 label='password'
                 placeholder='Password'
                 helperText=''
@@ -70,6 +72,7 @@ export class Register extends Component {
                 onChange={this.changeHandler}
               />
               <TextField
+                type='password'
                 label='Confirm Password'
                 placeholder='Confirm password'
                 helperText=''

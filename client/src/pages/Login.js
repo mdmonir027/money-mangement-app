@@ -31,6 +31,7 @@ export class Login extends Component {
             <h3>Register Your Account</h3>
             <form onSubmit={this.submitHandler}>
               <TextField
+                type='email'
                 label='Email'
                 placeholder='Email address'
                 helperText=''
@@ -44,6 +45,7 @@ export class Login extends Component {
                 onChange={this.changeHandler}
               />
               <TextField
+                type='password'
                 label='Password'
                 placeholder='Password'
                 helperText=''
