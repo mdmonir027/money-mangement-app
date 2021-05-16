@@ -1,6 +1,8 @@
 import { Button, Card, Grid, TextField } from '@material-ui/core';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { login } from '../store/actions/authActions';
 
 export class Login extends Component {
   constructor() {
@@ -8,9 +10,19 @@ export class Login extends Component {
     this.state = {
       email: '',
       password: '',
-
-      errors: '',
+      errors: {},
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.auth.errors) !== JSON.stringify(prevState.errors)
+    ) {
+      return {
+        errors: nextProps.auth.errors,
+      };
+    }
+    return {};
   }
 
   changeHandler = (event) => {
@@ -21,10 +33,12 @@ export class Login extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
+    const { email, password } = this.state;
+    this.props.login({ email, password }, this.props.history);
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, errors } = this.state;
     return (
       <Grid container justify='center' style={{ marginTop: 20 }}>
         <Grid item md={5}>
@@ -35,13 +49,13 @@ export class Login extends Component {
                 type='email'
                 label='Email'
                 placeholder='Email address'
-                helperText=''
+                helperText={errors.email ? errors.email : ''}
                 fullWidth
                 margin='normal'
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={false}
+                error={!!errors.email}
                 name='email'
                 onChange={this.changeHandler}
                 value={email}
@@ -50,13 +64,13 @@ export class Login extends Component {
                 type='password'
                 label='Password'
                 placeholder='Password'
-                helperText=''
+                helperText={errors.password ? errors.password : ''}
                 fullWidth
                 margin='normal'
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={false}
+                error={!!errors.password}
                 name='password'
                 onChange={this.changeHandler}
                 value={password}
@@ -84,4 +98,8 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { login })(Login);
