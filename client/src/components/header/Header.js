@@ -10,7 +10,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from '../../store/actions/authActions';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -70,9 +72,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+function PrimarySearchAppBar(props) {
   const classes = useStyles();
-
+  const { isAuthenticated } = props.auth;
   return (
     <div className={classes.grow}>
       <AppBar position='static'>
@@ -112,9 +114,24 @@ export default function PrimarySearchAppBar() {
                 <AccountCircle />
               </IconButton>
             </Link>
+            {isAuthenticated && (
+              <p style={{ color: 'white' }} onClick={() => props.logout()}>
+                <IconButton
+                  edge='end'
+                  aria-label='account of current user'
+                  color='inherit'
+                >
+                  Logout
+                </IconButton>
+              </p>
+            )}
           </div>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { logout })(PrimarySearchAppBar);
