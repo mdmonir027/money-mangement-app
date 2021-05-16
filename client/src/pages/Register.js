@@ -1,6 +1,9 @@
 import { Button, Card, Grid, TextField } from '@material-ui/core';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { register } from '../store/actions/authActions';
+
 export class Register extends Component {
   constructor() {
     super();
@@ -9,8 +12,19 @@ export class Register extends Component {
       email: '',
       password: '',
       confirmPassword: '',
-      errors: '',
+      errors: {},
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.auth.errors) !== JSON.stringify(prevState.errors)
+    ) {
+      return {
+        errors: nextProps.auth.errors,
+      };
+    }
+    return {};
   }
 
   changeHandler = (event) => {
@@ -21,10 +35,15 @@ export class Register extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
+    const { name, email, password, confirmPassword } = this.state;
+    this.props.register(
+      { name, email, password, confirmPassword },
+      this.props.history
+    );
   };
 
   render() {
-    const { name, email, password, confirmPassword } = this.state;
+    const { name, email, password, confirmPassword, errors } = this.state;
     return (
       <Grid container justify='center' style={{ marginTop: 20 }}>
         <Grid item md={5}>
@@ -34,13 +53,13 @@ export class Register extends Component {
               <TextField
                 label='Name'
                 placeholder='Full name'
-                helperText=''
+                helperText={errors.name ? errors.name : ''}
                 fullWidth
                 margin='normal'
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={false}
+                error={!!errors.name}
                 name='name'
                 onChange={this.changeHandler}
                 value={name}
@@ -49,28 +68,28 @@ export class Register extends Component {
                 type='email'
                 label='Email'
                 placeholder='Email address'
-                helperText=''
+                helperText={errors.email ? errors.email : ''}
                 fullWidth
                 margin='normal'
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={false}
+                error={!!errors.email}
                 name='email'
                 onChange={this.changeHandler}
                 value={email}
               />
               <TextField
                 type='password'
-                label='password'
+                label='Password'
                 placeholder='Password'
-                helperText=''
+                helperText={errors.password ? errors.password : ''}
                 fullWidth
                 margin='normal'
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={false}
+                error={!!errors.password}
                 name='password'
                 onChange={this.changeHandler}
                 value={password}
@@ -79,13 +98,15 @@ export class Register extends Component {
                 type='password'
                 label='Confirm Password'
                 placeholder='Confirm password'
-                helperText=''
+                helperText={
+                  errors.confirmPassword ? errors.confirmPassword : ''
+                }
                 fullWidth
                 margin='normal'
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={false}
+                error={!!errors.confirmPassword}
                 name='confirmPassword'
                 onChange={this.changeHandler}
                 value={confirmPassword}
@@ -112,4 +133,8 @@ export class Register extends Component {
   }
 }
 
-export default Register;
+const mapToStateProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapToStateProps, { register })(Register);
