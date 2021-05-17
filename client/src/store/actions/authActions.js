@@ -7,6 +7,7 @@ export const register = (user, history) => (dispatch) => {
   axios
     .post('http://localhost:4000/api/user/register', user)
     .then((response) => {
+      console.log(response); // todo remove later
       dispatch({
         type: types.USER_ERROR,
         payload: {

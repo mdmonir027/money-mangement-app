@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
@@ -114,16 +115,17 @@ function PrimarySearchAppBar(props) {
                 <AccountCircle />
               </IconButton>
             </Link>
+
             {isAuthenticated && (
-              <p style={{ color: 'white' }} onClick={() => props.logout()}>
+              <Link style={{ color: 'white' }} onClick={() => props.logout()}>
                 <IconButton
                   edge='end'
                   aria-label='account of current user'
                   color='inherit'
                 >
-                  Logout
+                  <ExitToAppIcon />
                 </IconButton>
-              </p>
+              </Link>
             )}
           </div>
         </Toolbar>
