@@ -1,7 +1,8 @@
 // dependencies
-
 const Transaction = require('../models/Transaction');
 const User = require('../models/User');
+const { validationResult } = require('express-validator');
+const errorValidationFormatter = require('../utils/errorValidationFormatter');
 
 // app scaffolding
 const controller = {};
@@ -29,11 +30,17 @@ controller.index = async (req, res) => {
 };
 
 controller.create = async (req, res) => {
+  const errors = validationResult(req).formatWith(errorValidationFormatter);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors.mapped());
+  }
+
   const { amount, note, type } = req.body;
   const userId = req.user._id;
 
   const transactionInstance = new Transaction({
-    amount,
+    amount: Number(amount),
     note,
     type,
     author: userId,
@@ -42,7 +49,7 @@ controller.create = async (req, res) => {
   try {
     const transaction = await transactionInstance.save();
 
-    const currentUser = { ...req.user };
+    const currentUser = { ...req.user._doc };
 
     if (type === 'income') {
       currentUser.balance = currentUser.balance + amount;
@@ -54,10 +61,14 @@ controller.create = async (req, res) => {
 
     currentUser.transactions.unshift(transaction._id);
 
-    await User.findByIdAndUpdate(transaction._id, { $set: currentUser });
-    res.status(201).message({
+    await User.findByIdAndUpdate(
+      currentUser._id,
+      { $set: currentUser },
+      { new: true }
+    );
+    res.status(201).json({
       message: 'Transaction created successfully',
-      result: { ...transaction },
+      result: transaction,
     });
   } catch (e) {
     console.log(e); // todo remove later
@@ -71,11 +82,9 @@ controller.show = async (req, res) => {
   const { transactionId } = req.params;
 
   try {
-    const transaction = await Transaction.find({ _id: transactionId });
+    const transaction = await Transaction.findOne({ _id: transactionId });
     if (transaction) {
-      return res.status(200).json({
-        transaction,
-      });
+      return res.status(200).json(transaction);
     }
     return res.status(204).json({
       message: 'No transaction found',
@@ -88,6 +97,7 @@ controller.show = async (req, res) => {
   }
 };
 
+//  todo update the user model
 controller.update = async (req, res) => {
   const { transactionId } = req.params;
 
@@ -115,7 +125,9 @@ controller.remove = async (req, res) => {
 
   try {
     await Transaction.findByIdAndRemove(transactionId);
-
+    await User.findByIdAndUpdate(req.user._id, {
+      $pull: { transactions: transactionId },
+    });
     res.status(204).json({
       message: 'Transaction deleted successfully',
     });

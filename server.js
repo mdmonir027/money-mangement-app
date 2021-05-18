@@ -1,15 +1,20 @@
 // dependencies
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 // custom dependencies
 const setMiddleware = require('./middleware/middleware');
 const setRoutes = require('./routes/routes');
-
+const passportInstance = require('./middleware/passport/passport');
 // scaffolding
 const app = express();
 
 setMiddleware(app);
+
+app.use(passport.initialize());
+app.use(passport.session());
+require('./passport')(passport);
 setRoutes(app);
 
 app.get('/', (req, res) => {

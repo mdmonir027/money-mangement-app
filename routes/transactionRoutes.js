@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const {
   index,
   create,
@@ -7,11 +6,16 @@ const {
   update,
   remove,
 } = require('../controller/transactionController');
+const authenticate = require('../middleware/passport/authenticate');
+const {
+  createValidator,
+  updateValidator,
+} = require('../validator/transactionValidator');
 
-router.get('/', index);
-router.post('/', create);
-router.get('/:transactionId', show);
-router.put('/:transactionId', update);
-router.delete('/:transactionId', remove);
+router.get('/', authenticate, index);
+router.post('/', authenticate, createValidator, create);
+router.get('/:transactionId', authenticate, show);
+router.put('/:transactionId', authenticate, updateValidator, update);
+router.delete('/:transactionId', authenticate, remove);
 
 module.exports = router;
