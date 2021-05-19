@@ -1,8 +1,6 @@
-import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import Collapse from '@material-ui/core/Collapse';
 import { red } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
@@ -61,24 +59,16 @@ function Transaction({
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar
-            aria-label='recipe'
-            className={classes.avatar}
-            alt={user.name}
-            src='/'
-          />
-        }
-        title={user.name}
-        subheader={new Date(createdAt).toDateString()}
-      />
       <CardContent>
         <Typography variant='h5' component='h5'>
           {note}
         </Typography>
         <Typography variant='h6' component='p'>
-          {amount} -({type})
+          {amount} - ({' '}
+          <span style={{ color: type === 'income' ? 'green' : 'red' }}>
+            {type}
+          </span>{' '}
+          )
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
