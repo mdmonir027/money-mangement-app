@@ -19,6 +19,7 @@ export const loadTransactions = () => (dispatch) => {
     });
 };
 
+// ! rename the function name
 export const AddNewTransaction = (transaction, history) => (dispatch) => {
   axios
     .post(`${baseURL}/transaction`, transaction)
@@ -31,6 +32,20 @@ export const AddNewTransaction = (transaction, history) => (dispatch) => {
       });
 
       history.push('/');
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+export const removeTransaction = (transactionId) => (dispatch) => {
+  axios
+    .delete(`${baseURL}/transaction/${transactionId}`)
+    .then(() => {
+      dispatch({
+        type: types.REMOVE_TRANSACTION,
+        payload: { transactionId },
+      });
     })
     .catch((e) => {
       console.log(e);

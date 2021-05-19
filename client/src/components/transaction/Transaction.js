@@ -13,6 +13,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import React from 'react';
+import { connect } from 'react-redux';
+import { removeTransaction } from '../../store/actions/transactionAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,13 +40,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Transaction({
+function Transaction({
   user,
   note,
   amount,
   type,
   id,
   createdAt,
+  removeTransaction,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -81,7 +84,7 @@ export default function Transaction({
         >
           <EditIcon />
         </IconButton>
-        <IconButton aria-label='share'>
+        <IconButton aria-label='delete' onClick={() => removeTransaction(id)}>
           <DeleteIcon />
         </IconButton>
         <IconButton
@@ -103,3 +106,5 @@ export default function Transaction({
     </Card>
   );
 }
+
+export default connect(null, { removeTransaction })(Transaction);
