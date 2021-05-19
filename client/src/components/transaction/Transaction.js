@@ -8,8 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import clsx from 'clsx';
 import React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -71,26 +69,19 @@ function Transaction({
           )
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions
+        disableSpacing
+        style={{ display: 'flex', justifyContent: 'space-between' }}
+      >
         <IconButton
           aria-label='add to favorites'
           onClick={handleExpandClick}
           aria-expanded={expanded}
         >
-          <EditIcon />
+          <EditIcon style={{ color: expanded ? '#f44336' : '' }} />
         </IconButton>
         <IconButton aria-label='delete' onClick={() => removeTransaction(id)}>
           <DeleteIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label='show more'
-        >
-          <ExpandMoreIcon />
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
