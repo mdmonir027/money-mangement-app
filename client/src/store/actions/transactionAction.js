@@ -18,3 +18,21 @@ export const loadTransactions = () => (dispatch) => {
       console.log(e);
     });
 };
+
+export const AddNewTransaction = (transaction, history) => (dispatch) => {
+  axios
+    .post(`${baseURL}/transaction`, transaction)
+    .then((response) => {
+      dispatch({
+        type: types.ADD_NEW_TRANSACTION,
+        payload: {
+          transaction: response.data,
+        },
+      });
+
+      history.push('/');
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};

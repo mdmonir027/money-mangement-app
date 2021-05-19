@@ -11,7 +11,6 @@ export class Dashboard extends Component {
 
   render() {
     const { auth, transactions } = this.props;
-    console.log(transactions);
     return (
       <div>
         <Grid container justify='center'>

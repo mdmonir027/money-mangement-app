@@ -14,7 +14,7 @@ controller.index = async (req, res) => {
     if (transactions.length > 0) {
       return res.status(200).json({
         message: `${transactions.length} transactions founded`,
-        transactions,
+        transactions: transactions.reverse(),
       });
     }
 
@@ -66,10 +66,7 @@ controller.create = async (req, res) => {
       { $set: currentUser },
       { new: true }
     );
-    res.status(201).json({
-      message: 'Transaction created successfully',
-      result: transaction,
-    });
+    res.status(201).json(transaction);
   } catch (e) {
     console.log(e); // todo remove later
     res.status(500).json({
