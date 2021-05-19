@@ -51,3 +51,19 @@ export const removeTransaction = (transactionId) => (dispatch) => {
       console.log(e);
     });
 };
+
+export const updateTransaction = (transactionId, transaction) => (dispatch) => {
+  axios
+    .put(`${baseURL}/transaction/${transactionId}`, transaction)
+    .then((response) => {
+      dispatch({
+        type: types.UPDATE_TRANSACTION,
+        payload: {
+          transaction: response.data.transaction,
+        },
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};

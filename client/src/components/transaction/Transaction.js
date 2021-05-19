@@ -14,12 +14,16 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeTransaction } from '../../store/actions/transactionAction';
+import {
+  removeTransaction,
+  updateTransaction,
+} from '../../store/actions/transactionAction';
+import EditTransaction from './EditTransaction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
     marginBottom: 20,
+    width: 350,
   },
   media: {
     height: 0,
@@ -48,6 +52,7 @@ function Transaction({
   id,
   createdAt,
   removeTransaction,
+  updateTransaction,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -99,12 +104,19 @@ function Transaction({
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-        </CardContent>
+        <EditTransaction
+          note={note}
+          amount={amount}
+          type={type}
+          id={id}
+          collapseMenuClose={() => setExpanded(false)}
+          updateTransaction={updateTransaction}
+        />
       </Collapse>
     </Card>
   );
 }
 
-export default connect(null, { removeTransaction })(Transaction);
+export default connect(null, { removeTransaction, updateTransaction })(
+  Transaction
+);

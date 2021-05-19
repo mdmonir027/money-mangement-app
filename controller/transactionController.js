@@ -18,8 +18,9 @@ controller.index = async (req, res) => {
       });
     }
 
-    return res.status(204).json({
+    return res.status(200).json({
       message: 'No transactions found',
+      transactions: [],
     });
   } catch (e) {
     console.log(e); // todo remove later
