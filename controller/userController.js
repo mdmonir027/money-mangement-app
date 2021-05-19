@@ -34,6 +34,9 @@ controller.login = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        balance: user.balance,
+        income: user.income,
+        expense: user.expense,
       },
       'SECRET',
       { expiresIn: '2h' }
