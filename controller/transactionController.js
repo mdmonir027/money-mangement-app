@@ -95,14 +95,43 @@ controller.show = async (req, res) => {
   }
 };
 
-//  todo update the user model
 controller.update = async (req, res) => {
   const { transactionId } = req.params;
 
   try {
+    const { note, amount, type } = req.body;
+    const transaction = await Transaction.findById(transactionId);
+    const user = await User.findById(req.user._id);
+
     const updatedTransaction = await Transaction.findByIdAndUpdate(
       transactionId,
-      { $set: req.body },
+      { $set: { note, type, amount } },
+      { new: true }
+    );
+
+    let { balance, income, expense } = user;
+
+    console.log('net balance', balance);
+
+    if (type === 'income' && transaction.type !== 'income') {
+      expense = expense - amount;
+      income = income + amount;
+      balance = income - expense;
+
+      console.log('if', balance);
+    } else if (type === 'expense' && transaction.type !== 'expense') {
+      income = income - amount;
+      expense = expense + amount;
+      balance = income - expense;
+
+      console.log('else if', balance);
+    }
+
+    await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: { income, balance, expense },
+      },
       { new: true }
     );
 
@@ -122,10 +151,24 @@ controller.remove = async (req, res) => {
   const { transactionId } = req.params;
 
   try {
+    const transaction = await Transaction.findById(transactionId);
+    const user = await User.findById(req.user._id);
+
+    let { balance, income, expense } = user;
+    if (transaction.type === 'income') {
+      balance = balance - transaction.amount;
+      income = income - transaction.amount;
+    } else if (transaction.type === 'expense') {
+      balance = balance + transaction.amount;
+      expense = expense - transaction.amount;
+    }
+
     await Transaction.findByIdAndRemove(transactionId);
     await User.findByIdAndUpdate(req.user._id, {
       $pull: { transactions: transactionId },
+      $set: { income, expense, balance },
     });
+
     res.status(204).json({
       message: 'Transaction deleted successfully',
     });
