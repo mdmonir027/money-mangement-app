@@ -108,7 +108,7 @@ function PrimarySearchAppBar(props) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <>
                 <Link to='/' style={{ color: 'white' }}>
                   <IconButton
@@ -117,15 +117,6 @@ function PrimarySearchAppBar(props) {
                     color='inherit'
                   >
                     <HomeIcon />
-                  </IconButton>
-                </Link>
-                <Link to='/login' style={{ color: 'white' }}>
-                  <IconButton
-                    edge='end'
-                    aria-label='account of current user'
-                    color='inherit'
-                  >
-                    <AccountCircle />
                   </IconButton>
                 </Link>
 
@@ -145,6 +136,18 @@ function PrimarySearchAppBar(props) {
                     color='inherit'
                   >
                     <ExitToAppIcon />
+                  </IconButton>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to='/login' style={{ color: 'white' }}>
+                  <IconButton
+                    edge='end'
+                    aria-label='account of current user'
+                    color='inherit'
+                  >
+                    <AccountCircle />
                   </IconButton>
                 </Link>
               </>
