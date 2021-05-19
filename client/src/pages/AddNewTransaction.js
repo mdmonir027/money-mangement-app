@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -40,64 +39,60 @@ export class AddNewTransaction extends Component {
   render() {
     const { amount, type, note, errors } = this.state;
     return (
-      <Grid container justify='center' style={{ marginTop: 20 }}>
-        <Grid item md={5}>
-          <Card style={{ padding: 30 }}>
-            <h3>Add New Transaction</h3>
-            <form onSubmit={this.submitHandler}>
-              <TextField
-                type='number'
-                label='Amount'
-                placeholder='Enter amount'
-                helperText={errors.amount ? errors.amount : ''}
-                fullWidth
-                margin='normal'
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                error={!!errors.amount}
-                name='amount'
-                onChange={this.changeHandler}
-                value={amount}
-              />
-              <FormControl style={{ width: '100%' }}>
-                <InputLabel id='demo-simple-select-label'>Age</InputLabel>
-                <Select
-                  labelId='demo-simple-select-label'
-                  id='demo-simple-select'
-                  value={type}
-                  onChange={this.changeHandler}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  name='type'
-                >
-                  <MenuItem value='income'>Income</MenuItem>
-                  <MenuItem value='expense'>Expense</MenuItem>
-                </Select>
-              </FormControl>
-              <TextField
-                type='text'
-                label='Note'
-                placeholder='Enter a note'
-                helperText={errors.note ? errors.note : ''}
-                fullWidth
-                margin='normal'
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                error={!!errors.note}
-                name='note'
-                onChange={this.changeHandler}
-                value={note}
-              />
-              <Button variant='contained' color='primary' type='submit'>
-                Add New
-              </Button>
-            </form>
-          </Card>
-        </Grid>
-      </Grid>
+      <Card style={{ padding: 30 }}>
+        <h3>Add New Transaction</h3>
+        <form onSubmit={this.submitHandler}>
+          <TextField
+            type='number'
+            label='Amount'
+            placeholder='Enter amount'
+            helperText={errors.amount ? errors.amount : ''}
+            fullWidth
+            margin='normal'
+            InputLabelProps={{
+              shrink: true,
+            }}
+            error={!!errors.amount}
+            name='amount'
+            onChange={this.changeHandler}
+            value={amount}
+          />
+          <FormControl style={{ width: '100%' }}>
+            <InputLabel id='demo-simple-select-label'>Age</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={type}
+              onChange={this.changeHandler}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              name='type'
+            >
+              <MenuItem value='income'>Income</MenuItem>
+              <MenuItem value='expense'>Expense</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            type='text'
+            label='Note'
+            placeholder='Enter a note'
+            helperText={errors.note ? errors.note : ''}
+            fullWidth
+            margin='normal'
+            InputLabelProps={{
+              shrink: true,
+            }}
+            error={!!errors.note}
+            name='note'
+            onChange={this.changeHandler}
+            value={note}
+          />
+          <Button variant='contained' color='primary' type='submit'>
+            Add New
+          </Button>
+        </form>
+      </Card>
     );
   }
 }

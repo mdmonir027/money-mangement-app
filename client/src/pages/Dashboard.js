@@ -1,4 +1,3 @@
-import { Grid } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Transaction from '../components/transaction/Transaction';
@@ -13,22 +12,18 @@ export class Dashboard extends Component {
     const { auth, transactions } = this.props;
     return (
       <div>
-        <Grid container justify='center'>
-          <Grid item md={5}>
-            <h2>Dashboard</h2>
-            {transactions?.map((tran) => (
-              <Transaction
-                key={tran._id}
-                user={auth.user}
-                note={tran.note}
-                id={tran._id}
-                amount={tran.amount}
-                type={tran.type}
-                createdAt={tran.createdAt}
-              />
-            ))}
-          </Grid>
-        </Grid>
+        <h2>Dashboard</h2>
+        {transactions?.map((tran) => (
+          <Transaction
+            key={tran._id}
+            user={auth.user}
+            note={tran.note}
+            id={tran._id}
+            amount={tran.amount}
+            type={tran.type}
+            createdAt={tran.createdAt}
+          />
+        ))}
       </div>
     );
   }
