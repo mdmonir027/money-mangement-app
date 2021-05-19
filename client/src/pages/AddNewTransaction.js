@@ -22,18 +22,6 @@ export class AddNewTransaction extends Component {
       errors: {},
     };
   }
-
-  //   static getDerivedStateFromProps(nextProps, prevState) {
-  //     if (
-  //       JSON.stringify(nextProps.auth.errors) !== JSON.stringify(prevState.errors)
-  //     ) {
-  //       return {
-  //         errors: nextProps.auth.errors,
-  //       };
-  //     }
-  //     return {};
-  //   }
-
   changeHandler = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -43,7 +31,10 @@ export class AddNewTransaction extends Component {
   submitHandler = (event) => {
     event.preventDefault();
     const { amount, note, type } = this.state;
-    this.props.AddNewTransactionAct({ amount, note, type }, this.props.history);
+    this.props.AddNewTransactionAct(
+      { amount: parseInt(amount), note, type },
+      this.props.history
+    );
   };
 
   render() {
