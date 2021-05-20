@@ -10,6 +10,9 @@ export class Dashboard extends Component {
 
   render() {
     const { auth, transactions } = this.props;
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push('/login');
+    }
     return (
       <div>
         <h2>Dashboard</h2>

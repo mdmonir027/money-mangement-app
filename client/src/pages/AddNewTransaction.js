@@ -38,6 +38,9 @@ export class AddNewTransaction extends Component {
 
   render() {
     const { amount, type, note, errors } = this.state;
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push('/login');
+    }
     return (
       <Card style={{ padding: 30 }}>
         <h3>Add New Transaction</h3>
@@ -99,6 +102,7 @@ export class AddNewTransaction extends Component {
 
 const mapToStateProps = (state) => ({
   transaction: state.transaction,
+  auth: state.auth,
 });
 
 export default connect(mapToStateProps, { AddNewTransactionAct })(
