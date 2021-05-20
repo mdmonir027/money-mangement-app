@@ -15,6 +15,7 @@ module.exports = (app) => {
     app.use(item);
   });
 
-  // app.use(passport.initialize());
-  // require('./passport/passport')(passport);
+  app.use(passport.initialize());
+  app.use(passport.session());
+  require('./passport/passport')(passport);
 };
