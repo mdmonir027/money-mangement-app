@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AddNewTransaction as AddNewTransactionAct } from '../store/actions/transactionAction';
+import { addNewTransaction } from '../store/actions/transactionAction';
 
 export class AddNewTransaction extends Component {
   constructor() {
@@ -30,7 +30,7 @@ export class AddNewTransaction extends Component {
   submitHandler = (event) => {
     event.preventDefault();
     const { amount, note, type } = this.state;
-    this.props.AddNewTransactionAct(
+    this.props.addNewTransaction(
       { amount: parseInt(amount), note, type },
       this.props.history
     );
@@ -105,6 +105,6 @@ const mapToStateProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapToStateProps, { AddNewTransactionAct })(
+export default connect(mapToStateProps, { addNewTransaction })(
   AddNewTransaction
 );

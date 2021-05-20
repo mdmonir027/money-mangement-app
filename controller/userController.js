@@ -47,7 +47,6 @@ controller.login = async (req, res) => {
       token: `Bearer ${token}`,
     });
   } catch (e) {
-    console.log(e); // todo remove later
     res.status(500).json({
       error: 'Internal Server Error!',
     });
@@ -75,7 +74,6 @@ controller.register = async (req, res) => {
 
     res.status(200).json(user);
   } catch (e) {
-    console.log(e);
     res.status(500).json({
       error: 'Internal Server Error!',
     });

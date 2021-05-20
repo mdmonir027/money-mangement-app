@@ -19,7 +19,6 @@ import EditTransaction from './EditTransaction';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: 20,
-    width: 350,
   },
   media: {
     height: 0,

@@ -16,17 +16,21 @@ export class Dashboard extends Component {
     return (
       <div>
         <h2>Dashboard</h2>
-        {transactions?.map((tran) => (
-          <Transaction
-            key={tran._id}
-            user={auth.user}
-            note={tran.note}
-            id={tran._id}
-            amount={tran.amount}
-            type={tran.type}
-            createdAt={tran.createdAt}
-          />
-        ))}
+        {transactions.length > 0 ? (
+          transactions?.map((tran) => (
+            <Transaction
+              key={tran._id}
+              user={auth.user}
+              note={tran.note}
+              id={tran._id}
+              amount={tran.amount}
+              type={tran.type}
+              createdAt={tran.createdAt}
+            />
+          ))
+        ) : (
+          <h3>No transaction found</h3>
+        )}
       </div>
     );
   }

@@ -7,9 +7,6 @@ module.exports = (req, res, next) => {
       console.log(info); // todo remove later
       return next(err);
     }
-
-    console.log(user);
-
     if (!user) {
       return res.status(401).json({
         message: 'Authentication failed!',

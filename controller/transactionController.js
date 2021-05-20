@@ -23,7 +23,6 @@ controller.index = async (req, res) => {
       transactions: [],
     });
   } catch (e) {
-    console.log(e); // todo remove later
     res.status(500).json({
       message: 'Internal Server Error',
     });
@@ -69,7 +68,6 @@ controller.create = async (req, res) => {
     );
     res.status(201).json(transaction);
   } catch (e) {
-    console.log(e); // todo remove later
     res.status(500).json({
       message: 'Internal Server Error',
     });
@@ -88,7 +86,6 @@ controller.show = async (req, res) => {
       message: 'No transaction found',
     });
   } catch (e) {
-    console.log(e); // todo remove later
     res.status(500).json({
       message: 'Internal Server Error',
     });
@@ -111,20 +108,14 @@ controller.update = async (req, res) => {
 
     let { balance, income, expense } = user;
 
-    console.log('net balance', balance);
-
     if (type === 'income' && transaction.type !== 'income') {
       expense = expense - amount;
       income = income + amount;
       balance = income - expense;
-
-      console.log('if', balance);
     } else if (type === 'expense' && transaction.type !== 'expense') {
       income = income - amount;
       expense = expense + amount;
       balance = income - expense;
-
-      console.log('else if', balance);
     }
 
     await User.findByIdAndUpdate(
@@ -140,7 +131,6 @@ controller.update = async (req, res) => {
       transaction: updatedTransaction,
     });
   } catch (e) {
-    console.log(e); // todo remove later
     res.status(500).json({
       message: 'Internal Server Error',
     });
@@ -173,7 +163,6 @@ controller.remove = async (req, res) => {
       message: 'Transaction deleted successfully',
     });
   } catch (e) {
-    console.log(e); // todo remove later
     res.status(500).json({
       message: 'Internal Server Error',
     });

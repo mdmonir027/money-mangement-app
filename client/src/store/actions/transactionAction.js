@@ -4,7 +4,6 @@ import * as types from './types';
 const baseURL = 'http://localhost:4000/api';
 
 export const loadTransactions = () => (dispatch) => {
-  console.log('load transactions');
   axios
     .get(`${baseURL}/transaction`)
     .then((response) => {
@@ -15,12 +14,11 @@ export const loadTransactions = () => (dispatch) => {
       });
     })
     .catch((e) => {
-      console.log(e);
+      //
     });
 };
 
-// ! rename the function name
-export const AddNewTransaction = (transaction, history) => (dispatch) => {
+export const addNewTransaction = (transaction, history) => (dispatch) => {
   axios
     .post(`${baseURL}/transaction`, transaction)
     .then((response) => {
@@ -48,7 +46,7 @@ export const removeTransaction = (transactionId) => (dispatch) => {
       });
     })
     .catch((e) => {
-      console.log(e);
+      // console.log(e);
     });
 };
 
@@ -64,6 +62,6 @@ export const updateTransaction = (transactionId, transaction) => (dispatch) => {
       });
     })
     .catch((e) => {
-      console.log(e);
+      // console.log(e);
     });
 };

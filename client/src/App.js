@@ -17,11 +17,11 @@ class App extends Component {
         <Container style={{ marginTop: 10 }}>
           <Grid container justify='center'>
             {this.props.auth.isAuthenticated && (
-              <Grid item md={5}>
+              <Grid item md={5} sm={6}>
                 <Profile />
               </Grid>
             )}
-            <Grid item md={5}>
+            <Grid item md={5} sm={6}>
               <Switch>
                 <Route path='/' exact component={Dashboard} />
                 <Route path='/login' component={Login} />

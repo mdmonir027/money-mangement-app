@@ -1,17 +1,10 @@
-import {
-  AppBar,
-  IconButton,
-  InputBase,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AddIcon from '@material-ui/icons/Add';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -29,30 +22,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   inputRoot: {
     color: 'inherit',
@@ -78,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
 function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const { isAuthenticated } = props.auth;
+
+  const logout = (event) => {
+    event.preventDefault();
+    props.logout();
+  };
+
   return (
     <div className={classes.grow}>
       <AppBar position='static'>
@@ -93,19 +68,6 @@ function PrimarySearchAppBar(props) {
           <Typography className={classes.title} variant='h6' noWrap>
             Money Manage
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder='Search…'
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {isAuthenticated ? (
@@ -129,7 +91,7 @@ function PrimarySearchAppBar(props) {
                     <AddIcon />
                   </IconButton>
                 </Link>
-                <Link style={{ color: 'white' }} onClick={() => props.logout()}>
+                <Link to='/' style={{ color: 'white' }} onClick={logout}>
                   <IconButton
                     edge='end'
                     aria-label='account of current user'
